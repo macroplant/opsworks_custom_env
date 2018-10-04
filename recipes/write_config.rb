@@ -3,7 +3,7 @@
 
 node[:deploy].each do |application, deploy|
   # rails apps only
-  next unless deploy[:application_type].eql?('rails')
+  # next unless deploy[:application_type].eql?('rails')
   # and only if custom_env JSON is present
   next unless node[:custom_env].present? && node[:custom_env][application].present?
 
