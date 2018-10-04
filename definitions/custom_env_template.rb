@@ -7,17 +7,23 @@
 
 define :custom_env_template do
 
+  directory "/srv/www/#{params[:application]}/shared/config" do
+    owner 'deploy'
+    group 'www-data'
+    recursive true
+  end
+
   template "/srv/www/#{params[:application]}/shared/config/application.yml" do
     source "application.yml.erb"
-    owner params[:deploy][:user]
-    group params[:deploy][:group]
-    mode "0660"
+    owner 'deploy'
+    group 'www-data'
+    mode "0774"
     variables :env => params[:env]
    # notifies :run, resources(:execute => "restart Rails app #{params[:application]} for custom env")
 
-    only_if do
-      File.exists?("/srv/www/#{params[:application]}/shared/config")
-    end
+    # only_if do
+    #   File.exists?("/srv/www/#{params[:application]}/shared/config")
+    # end
   end
 
 end
